@@ -4,7 +4,6 @@
   grid-row-start: 2;  
   padding: 1rem 2rem;
   overflow-y: auto;
-  background: url("src/static/public/background.svg");
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;

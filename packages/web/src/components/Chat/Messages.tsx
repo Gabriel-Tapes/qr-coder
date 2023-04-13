@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import QRCode from 'react-qr-code'
-import './styles/Messages.css'
 import { MessagesContext } from '..'
+import './styles/Messages.css'
+import background from '../../static/public/background.svg'
 
 export const Messages = () => {
   const lastMessage = useContext(MessagesContext)
@@ -22,7 +23,11 @@ export const Messages = () => {
   }, [contents])
 
   return (
-    <div className="messages" ref={messagesContainerRef}>
+    <div
+      style={{ backgroundImage: `url(${background})` }}
+      className="messages"
+      ref={messagesContainerRef}
+    >
       {contents.map(({ from, content, imageUrl, svg }, index) => {
         if (!content && !imageUrl && !svg) return null
         else
