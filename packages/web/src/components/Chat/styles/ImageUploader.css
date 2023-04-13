@@ -1,0 +1,41 @@
+.image-uploader {
+  height: 15rem;
+  background-color: #202c33;
+  position: relative;
+}
+
+.image-uploader label {
+  height: 100%;
+  width: 100%;
+  background-color: #111b21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.image-uploader .dropzone {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.image-uploader .dropzone:hover {
+  content: "hello world";
+  border: 0.5rem #313d45 dashed;
+  background-color: transparent;
+}
+
+.image-uploader .dropzone::file-selector-button {
+  display: none;
+}
