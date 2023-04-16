@@ -1,9 +1,18 @@
 import { useContext } from 'react'
 import { ChatContext } from '..'
 import './styles/Functions.css'
+import { ReactComponent as CreateIcon } from '@/assets/icons/create.svg'
+import { ReactComponent as ReadIcon } from '@/assets/icons/read.svg'
+import { ReactComponent as ScanIcon } from '@/assets/icons/scan.svg'
 
 interface FunctionsProps {
-  setSelected: ({ id, title }: { id: string; title: string }) => void
+  setSelected: ({
+    id,
+    title
+  }: {
+    id: 'create' | 'read' | 'scan'
+    title: string
+  }) => void
 }
 export const Functions = ({ setSelected }: FunctionsProps) => {
   const selected = useContext(ChatContext)
@@ -28,13 +37,25 @@ export const Functions = ({ setSelected }: FunctionsProps) => {
 }
 
 interface FunctionProps {
-  id: string
+  id: 'create' | 'read' | 'scan'
   title: string
-  handleClick: ({ id, title }: { id: string; title: string }) => void
+  handleClick: ({
+    id,
+    title
+  }: {
+    id: 'create' | 'read' | 'scan'
+    title: string
+  }) => void
 }
 
 const Function = ({ id, title, handleClick }: FunctionProps) => {
   const currentFunction = useContext(ChatContext)
+
+  const FunctionIcon = {
+    create: <CreateIcon className="function-icon" />,
+    read: <ReadIcon className="function-icon" />,
+    scan: <ScanIcon className="function-icon" />
+  }
 
   return (
     <button
@@ -42,7 +63,7 @@ const Function = ({ id, title, handleClick }: FunctionProps) => {
       onClick={() => handleClick({ id, title })}
       className={currentFunction.id === id ? 'selected' : ''}
     >
-      <i className="function-icon" />
+      {FunctionIcon[id]}
       <p className="function-name">{title}</p>
     </button>
   )

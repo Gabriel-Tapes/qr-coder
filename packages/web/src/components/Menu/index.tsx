@@ -5,14 +5,26 @@ import { Header } from './Header'
 import './styles/Menu.css'
 
 interface MenuProps {
-  setContext: ({ id, title }: { id: string; title: string }) => void
+  setContext: ({
+    id,
+    title
+  }: {
+    id: 'create' | 'read' | 'scan'
+    title: string
+  }) => void
   setShowing: ({ showing }: { showing: 'menu' | 'chat' }) => void
 }
 
 export const Menu = ({ setContext, setShowing }: MenuProps) => {
   const selected = useContext(ChatContext)
 
-  const handleSelect = ({ id, title }: { id: string; title: string }) => {
+  const handleSelect = ({
+    id,
+    title
+  }: {
+    id: 'create' | 'read' | 'scan'
+    title: string
+  }) => {
     setContext({ id, title })
     setShowing({ showing: 'chat' })
   }

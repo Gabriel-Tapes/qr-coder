@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import QRCode from 'react-qr-code'
 import { MessagesContext } from '..'
 import './styles/Messages.css'
-import background from '../../static/public/background.svg'
+import background from '@/assets/background.svg'
 
 export const Messages = () => {
   const lastMessage = useContext(MessagesContext)

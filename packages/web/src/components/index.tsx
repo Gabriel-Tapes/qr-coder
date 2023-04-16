@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 interface ChatContextProps {
-  id: string
+  id: 'create' | 'read' | 'scan'
   title: string
 }
 

@@ -1,11 +1,14 @@
 import { Chat } from './components/Chat'
 import { Menu } from './components/Menu'
 import { ChatContext, ShowingContext } from './components'
-import './static/styles/app.css'
+import './styles/app.css'
 import { useState } from 'react'
 
 export const App = () => {
-  const [context, setContext] = useState({
+  const [context, setContext] = useState<{
+    id: 'create' | 'read' | 'scan'
+    title: string
+  }>({
     id: 'create',
     title: 'Criar QR Code'
   })
