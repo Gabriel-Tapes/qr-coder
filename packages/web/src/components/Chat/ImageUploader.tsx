@@ -32,9 +32,11 @@ export const ImageUploader = ({ hidden, onSend }: ImageUploaderProps) => {
       <label htmlFor="image">Solte a imagem ou clique aqui</label>
       <input
         type="file"
+        title="Coloque a image aqui"
         className="dropzone"
         id="image"
         accept="image/*"
+        aria-hidden
         onChange={(e) => {
           e.preventDefault()
           const [file] = e.target.files!

@@ -1,7 +1,7 @@
 import { Chat } from './components/Chat'
 import { Menu } from './components/Menu'
 import { ChatContext, ShowingContext } from './components'
-import './static/styles/app.css'
+import './styles/app.css'
 import { useState } from 'react'
 
 export const App = () => {
