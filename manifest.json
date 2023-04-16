@@ -1,0 +1,13 @@
+{
+  "name": "qr-coder",
+  "short_name": "qrcoder",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "background_color": "#111b21"
+}
