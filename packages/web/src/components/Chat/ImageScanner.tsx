@@ -4,6 +4,8 @@ import { ChatContext, MessagesContext } from '..'
 import { ReactComponent as Camera } from '@/assets/chat-camera-icon.svg'
 import { ReactComponent as Close } from '@/assets/chat-close-icon.svg'
 import './styles/ImageScanner.css'
+import { ReactComponent as Camera } from '@/assets/chat-camera-icon.svg'
+import { ReactComponent as Close } from '@/assets/chat-close-icon.svg'
 
 export const ImageScanner = () => {
   const [scanning, setScanning] = useState<boolean>(false)

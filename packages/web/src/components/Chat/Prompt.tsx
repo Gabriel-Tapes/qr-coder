@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { ChatContext, MessagesContext } from '..'
 import { ReactComponent as Send } from '@/assets/chat-send-icon.svg'
 import './styles/Prompt.css'
+import { ReactComponent as Send } from '@/assets/chat-send-icon.svg'
 
 export const Prompt = () => {
   const { chatContext } = useContext(ChatContext)

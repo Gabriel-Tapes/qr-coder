@@ -30,6 +30,12 @@ const Function = ({ id, title }: FunctionProps) => {
     scan: <ScanIcon className="function-icon" />
   }
 
+  const FunctionIcon = {
+    create: <CreateIcon className="function-icon" />,
+    read: <ReadIcon className="function-icon" />,
+    scan: <ScanIcon className="function-icon" />
+  }
+
   return (
     <button
       id={id}
