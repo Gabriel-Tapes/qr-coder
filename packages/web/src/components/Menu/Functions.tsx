@@ -1,37 +1,16 @@
 import { useContext } from 'react'
-import { ChatContext } from '..'
+import { ChatContext, ShowingContext } from '..'
 import './styles/Functions.css'
 import { ReactComponent as CreateIcon } from '@/assets/icons/create.svg'
 import { ReactComponent as ReadIcon } from '@/assets/icons/read.svg'
 import { ReactComponent as ScanIcon } from '@/assets/icons/scan.svg'
 
-interface FunctionsProps {
-  setSelected: ({
-    id,
-    title
-  }: {
-    id: 'create' | 'read' | 'scan'
-    title: string
-  }) => void
-}
-export const Functions = ({ setSelected }: FunctionsProps) => {
-  const selected = useContext(ChatContext)
-
+export const Functions = () => {
   return (
     <div className="functions">
-      <ChatContext.Provider value={selected}>
-        <Function id="create" title="Criar QR Code" handleClick={setSelected} />
-        <Function
-          id="read"
-          title="Ler QR Code de imagem"
-          handleClick={setSelected}
-        />
-        <Function
-          id="scan"
-          title="Ler QR Code da Câmera"
-          handleClick={setSelected}
-        />
-      </ChatContext.Provider>
+      <Function id="create" title="Criar QR Code" />
+      <Function id="read" title="Ler QR Code de imagem" />
+      <Function id="scan" title="Ler QR Code da Câmera" />
     </div>
   )
 }
@@ -39,17 +18,11 @@ export const Functions = ({ setSelected }: FunctionsProps) => {
 interface FunctionProps {
   id: 'create' | 'read' | 'scan'
   title: string
-  handleClick: ({
-    id,
-    title
-  }: {
-    id: 'create' | 'read' | 'scan'
-    title: string
-  }) => void
 }
 
-const Function = ({ id, title, handleClick }: FunctionProps) => {
-  const currentFunction = useContext(ChatContext)
+const Function = ({ id, title }: FunctionProps) => {
+  const { chatContext, setChatContext } = useContext(ChatContext)
+  const { setShowing } = useContext(ShowingContext)
 
   const FunctionIcon = {
     create: <CreateIcon className="function-icon" />,
@@ -60,8 +33,11 @@ const Function = ({ id, title, handleClick }: FunctionProps) => {
   return (
     <button
       id={id}
-      onClick={() => handleClick({ id, title })}
-      className={currentFunction.id === id ? 'selected' : ''}
+      onClick={() => {
+        setChatContext({ id, title })
+        setShowing('chat')
+      }}
+      className={chatContext.id === id ? 'selected' : ''}
     >
       {FunctionIcon[id]}
       <p className="function-name">{title}</p>

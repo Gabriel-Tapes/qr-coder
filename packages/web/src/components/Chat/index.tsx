@@ -4,42 +4,36 @@ import { Prompt } from './Prompt'
 import { Messages } from './Messages'
 import { ImageUploader } from './ImageUploader'
 import { ImageScanner } from './ImageScanner'
-import { ChatContext, MessagesContext, ShowingContext } from '..'
+import { LastMessageProps, MessagesContext, ShowingContext } from '..'
 import QrScanner from 'qr-scanner'
 import './styles/Chat.css'
 
-interface ChatProps {
-  setShowing: ({ showing }: { showing: 'menu' | 'chat' }) => void
-}
-
-export const Chat = ({ setShowing }: ChatProps) => {
-  const context = useContext(MessagesContext)
-  const [lastMessage, setLastMessage] = useState<typeof context>(context)
-  const currentContext = useContext(ChatContext)
+export const Chat = () => {
+  const { showing } = useContext(ShowingContext)
+  const [lastMessage, setLastMessage] = useState<LastMessageProps>({
+    from: 'bot'
+  })
 
   const handleResponse = async () => {
-    if (lastMessage.imageUrl && lastMessage.from === 'user') {
+    const { imageUrl, content } = lastMessage
+    if (imageUrl) {
       try {
         const imageDecoded = (
-          await QrScanner.scanImage(lastMessage.imageUrl, {
+          await QrScanner.scanImage(imageUrl, {
             returnDetailedScanResult: true
           })
         ).data
-        console.log(imageDecoded)
-        setLastMessage({ from: 'bot', content: imageDecoded })
+        return setLastMessage({ from: 'bot', content: imageDecoded })
       } catch (err) {
-        setLastMessage({
+        return setLastMessage({
           from: 'bot',
           content: `Erro ao ler o QR Code: ${err}`
         })
       }
-    } else
-      setLastMessage(({ content }) => {
-        if (content) return { from: 'bot', content, svg: true }
-        return {
-          from: 'bot'
-        }
-      })
+    } else if (content)
+      return setLastMessage({ from: 'bot', content, svg: true })
+
+    return setLastMessage({ from: 'bot' })
   }
 
   useEffect(() => {
@@ -47,27 +41,14 @@ export const Chat = ({ setShowing }: ChatProps) => {
   }, [lastMessage])
 
   return (
-    <ShowingContext.Consumer>
-      {({ showing }) => (
-        <div className={`chat${showing === 'chat' ? ' show' : ''}`}>
-          <Header setShowing={setShowing} />
-          <MessagesContext.Provider value={lastMessage}>
-            <Messages />
-            <Prompt
-              onSend={setLastMessage}
-              hidden={currentContext.id !== 'create'}
-            />
-            <ImageUploader
-              onSend={setLastMessage}
-              hidden={currentContext.id !== 'read'}
-            />
-            <ImageScanner
-              onSend={setLastMessage}
-              hidden={currentContext.id !== 'scan'}
-            />
-          </MessagesContext.Provider>
-        </div>
-      )}
-    </ShowingContext.Consumer>
+    <div className={`chat${showing === 'chat' ? ' show' : ''}`}>
+      <Header />
+      <MessagesContext.Provider value={{ lastMessage, setLastMessage }}>
+        <Messages />
+        <Prompt />
+        <ImageUploader />
+        <ImageScanner />
+      </MessagesContext.Provider>
+    </div>
   )
 }

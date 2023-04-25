@@ -1,27 +1,21 @@
+import { useContext } from 'react'
 import './styles/ImageUploader.css'
+import { ChatContext, MessagesContext } from '..'
 
-interface ImageUploaderProps {
-  hidden: boolean
-  onSend(image: {
-    from: 'user' | 'bot'
-    content?: string
-    imageUrl?: string
-    svg?: boolean
-  }): void
-}
-
-export const ImageUploader = ({ hidden, onSend }: ImageUploaderProps) => {
-  if (hidden) return null
+export const ImageUploader = () => {
+  const { chatContext } = useContext(ChatContext)
+  const { setLastMessage } = useContext(MessagesContext)
+  if (chatContext.id !== 'read') return null
 
   const handleUploadImage = (file: File) => {
     const fileReader = new FileReader()
     fileReader.readAsDataURL(file)
 
     fileReader.onload = () =>
-      onSend({ from: 'user', imageUrl: fileReader.result?.toString() })
+      setLastMessage({ from: 'user', imageUrl: fileReader.result?.toString() })
 
     fileReader.onerror = () => {
-      onSend({
+      setLastMessage({
         from: 'bot',
         content: 'Erro ao ler a imagem'
       })

@@ -1,15 +1,15 @@
-import './styles/Header.css'
-import { ChatContext } from '..'
+import { useContext } from 'react'
+import { ChatContext, ShowingContext } from '..'
 import { ReactComponent as Back } from '@/assets/chat-back-icon.svg'
 import { ReactComponent as CreateIcon } from '@/assets/icons/create.svg'
 import { ReactComponent as ReadIcon } from '@/assets/icons/read.svg'
 import { ReactComponent as ScanIcon } from '@/assets/icons/scan.svg'
+import './styles/Header.css'
 
-interface HeaderProps {
-  setShowing: ({ showing }: { showing: 'menu' | 'chat' }) => void
-}
+export const Header = () => {
+  const { chatContext } = useContext(ChatContext)
+  const { setShowing } = useContext(ShowingContext)
 
-export const Header = ({ setShowing }: HeaderProps) => {
   const FunctionIcon = {
     create: <CreateIcon className="icon" />,
     read: <ReadIcon className="icon" />,
@@ -18,19 +18,12 @@ export const Header = ({ setShowing }: HeaderProps) => {
 
   return (
     <div className="header">
-      <button onClick={() => setShowing({ showing: 'menu' })}>
+      <button onClick={() => setShowing('menu')}>
         <Back />
       </button>
-      <ChatContext.Consumer>
-        {(value) => {
-          return (
-            <>
-              {FunctionIcon[value.id]}
-              <h2 className="title">{value.title}</h2>
-            </>
-          )
-        }}
-      </ChatContext.Consumer>
+
+      {FunctionIcon[chatContext.id]}
+      <h2 className="title">{chatContext.title}</h2>
     </div>
   )
 }

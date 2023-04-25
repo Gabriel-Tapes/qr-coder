@@ -1,27 +1,21 @@
+import { useContext, useState } from 'react'
+import { ChatContext, ShowingContext } from './components'
 import { Chat } from './components/Chat'
 import { Menu } from './components/Menu'
-import { ChatContext, ShowingContext } from './components'
 import './styles/app.css'
-import { useState } from 'react'
 
 export const App = () => {
-  const [context, setContext] = useState<{
-    id: 'create' | 'read' | 'scan'
-    title: string
-  }>({
-    id: 'create',
-    title: 'Criar QR Code'
-  })
-  const [showing, setShowing] = useState<{ showing: 'menu' | 'chat' }>({
-    showing: 'menu'
-  })
+  const { chatContext: initChatContext } = useContext(ChatContext)
+  const [chatContext, setChatContext] =
+    useState<typeof initChatContext>(initChatContext)
+  const [showing, setShowing] = useState<'menu' | 'chat'>('menu')
 
   return (
     <div className="app">
-      <ShowingContext.Provider value={showing}>
-        <ChatContext.Provider value={context}>
-          <Menu setContext={setContext} setShowing={setShowing} />
-          <Chat setShowing={setShowing} />
+      <ShowingContext.Provider value={{ showing, setShowing }}>
+        <ChatContext.Provider value={{ chatContext, setChatContext }}>
+          <Menu />
+          <Chat />
         </ChatContext.Provider>
       </ShowingContext.Provider>
     </div>

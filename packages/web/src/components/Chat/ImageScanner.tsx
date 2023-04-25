@@ -1,23 +1,15 @@
 import { QrScanner } from '@yudiel/react-qr-scanner'
-import { useState } from 'react'
-import './styles/ImageScanner.css'
+import { useContext, useState } from 'react'
+import { ChatContext, MessagesContext } from '..'
 import { ReactComponent as Camera } from '@/assets/chat-camera-icon.svg'
 import { ReactComponent as Close } from '@/assets/chat-close-icon.svg'
+import './styles/ImageScanner.css'
 
-interface ImageScannerProps {
-  hidden: boolean
-  onSend(image: {
-    from: 'user' | 'bot'
-    content?: string
-    imageUrl?: string
-    svg?: boolean
-  }): void
-}
-
-export const ImageScanner = ({ hidden, onSend }: ImageScannerProps) => {
-  if (hidden) return null
-
+export const ImageScanner = () => {
   const [scanning, setScanning] = useState<boolean>(false)
+  const { chatContext } = useContext(ChatContext)
+  const { setLastMessage } = useContext(MessagesContext)
+  if (chatContext.id !== 'scan') return null
 
   return (
     <div className="image-scanner">
@@ -29,7 +21,7 @@ export const ImageScanner = ({ hidden, onSend }: ImageScannerProps) => {
           <QrScanner
             onDecode={(result) => {
               setScanning(false)
-              onSend({ from: 'bot', content: result })
+              setLastMessage({ from: 'bot', content: result })
             }}
             onError={() => null}
           />

@@ -1,19 +1,12 @@
-import { useState } from 'react'
-import './styles/Prompt.css'
+import { useContext, useState } from 'react'
+import { ChatContext, MessagesContext } from '..'
 import { ReactComponent as Send } from '@/assets/chat-send-icon.svg'
+import './styles/Prompt.css'
 
-interface PromptProps {
-  hidden: boolean
-  onSend(message: {
-    from: 'user' | 'bot'
-    content?: string
-    imageUrl?: string
-    svg?: boolean
-  }): void
-}
-
-export const Prompt = ({ hidden, onSend }: PromptProps) => {
-  if (hidden) return null
+export const Prompt = () => {
+  const { chatContext } = useContext(ChatContext)
+  const { setLastMessage } = useContext(MessagesContext)
+  if (chatContext.id !== 'create') return null
   const [message, setMessage] = useState<string>('')
 
   return (
@@ -21,7 +14,7 @@ export const Prompt = ({ hidden, onSend }: PromptProps) => {
       className="prompt"
       onSubmit={(e) => {
         e.preventDefault()
-        if (message) onSend({ from: 'user', content: message })
+        if (message) setLastMessage({ from: 'user', content: message })
         setMessage('')
       }}
       autoComplete="off"

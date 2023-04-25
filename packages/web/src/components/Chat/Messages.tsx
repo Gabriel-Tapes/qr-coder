@@ -5,7 +5,7 @@ import './styles/Messages.css'
 import background from '@/assets/background.svg'
 
 export const Messages = () => {
-  const lastMessage = useContext(MessagesContext)
+  const { lastMessage } = useContext(MessagesContext)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
 
   const [contents, setContents] = useState<(typeof lastMessage)[]>([])
