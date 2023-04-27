@@ -5,7 +5,7 @@ import { Messages } from './Messages'
 import { ImageUploader } from './ImageUploader'
 import { ImageScanner } from './ImageScanner'
 import { LastMessageProps, MessagesContext, ShowingContext } from '..'
-import QrScanner from 'qr-scanner'
+import { decodeQrCode, generateQrCode } from 'core'
 import './styles/Chat.css'
 
 export const Chat = () => {
@@ -17,21 +17,10 @@ export const Chat = () => {
   const handleResponse = async () => {
     const { imageUrl, content } = lastMessage
     if (imageUrl) {
-      try {
-        const imageDecoded = (
-          await QrScanner.scanImage(imageUrl, {
-            returnDetailedScanResult: true
-          })
-        ).data
-        return setLastMessage({ from: 'bot', content: imageDecoded })
-      } catch (err) {
-        return setLastMessage({
-          from: 'bot',
-          content: `Erro ao ler o QR Code: ${err}`
-        })
-      }
+      const imageDecoded = await decodeQrCode(imageUrl)
+      return setLastMessage({ from: 'bot', content: imageDecoded })
     } else if (content)
-      return setLastMessage({ from: 'bot', content, svg: true })
+      return setLastMessage({ from: 'bot', imageUrl: generateQrCode(content) })
 
     return setLastMessage({ from: 'bot' })
   }
