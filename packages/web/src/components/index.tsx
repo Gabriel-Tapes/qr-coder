@@ -44,3 +44,22 @@ export const ShowingContext = createContext<ShowingContextProps>({
   showing: 'menu',
   setShowing: (showing: 'menu' | 'chat') => console.log(showing)
 })
+
+interface IImageViewerProps {
+  showing: boolean
+  url: string
+}
+
+interface ImageViewerContextProps {
+  imageViewerContext: IImageViewerProps
+  setImageViewerContext: ({ showing, url }: IImageViewerProps) => void
+}
+
+export const ImageViewerContext = createContext<ImageViewerContextProps>({
+  imageViewerContext: {
+    showing: false,
+    url: ''
+  },
+  setImageViewerContext: ({ showing, url }: IImageViewerProps) =>
+    console.log(showing, url)
+})
