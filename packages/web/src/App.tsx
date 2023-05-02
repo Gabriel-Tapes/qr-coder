@@ -4,13 +4,18 @@ import { Chat } from './components/Chat'
 import { Menu } from './components/Menu'
 import './styles/app.css'
 import { ImageViewer } from './components/ImageViewer'
+import { ChatStateProps, ImageViewerProps } from '@types'
+import { Showing } from '@types'
 
 export const App = () => {
   const { chatContext: initChatContext } = useContext(ChatContext)
   const [chatContext, setChatContext] =
-    useState<typeof initChatContext>(initChatContext)
-  const [showing, setShowing] = useState<'menu' | 'chat'>('menu')
-  const [viewImage, setViewImage] = useState({ showing: false, url: '' })
+    useState<ChatStateProps>(initChatContext)
+  const [showing, setShowing] = useState<Showing>('menu')
+  const [viewImage, setViewImage] = useState<ImageViewerProps>({
+    showing: false,
+    url: ''
+  })
 
   return (
     <div className="app">

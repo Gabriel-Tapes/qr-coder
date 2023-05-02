@@ -4,8 +4,9 @@ import { Prompt } from './Prompt'
 import { Messages } from './Messages'
 import { ImageUploader } from './ImageUploader'
 import { ImageScanner } from './ImageScanner'
-import { LastMessageProps, MessagesContext, ShowingContext } from '..'
+import { MessagesContext, ShowingContext } from '..'
 import { decodeQrCode, generateQrCode } from 'core'
+import { LastMessageProps } from '@types'
 import './styles/Chat.css'
 
 export const Chat = () => {

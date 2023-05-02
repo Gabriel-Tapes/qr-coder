@@ -2,13 +2,14 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { ImageViewerContext, MessagesContext } from '..'
 import './styles/Messages.css'
 import background from '@/assets/background.svg'
+import { LastMessageProps } from '@types'
 
 export const Messages = () => {
   const { lastMessage } = useContext(MessagesContext)
   const { setImageViewerContext } = useContext(ImageViewerContext)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
 
-  const [contents, setContents] = useState<(typeof lastMessage)[]>([])
+  const [contents, setContents] = useState<LastMessageProps[]>([])
 
   useEffect(() => {
     if (lastMessage) setContents((contents) => [...contents, lastMessage])
