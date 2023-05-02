@@ -19,7 +19,7 @@ export const Chat = () => {
     if (imageUrl) {
       const imageDecoded = await decodeQrCode(imageUrl)
       return setLastMessage({ from: 'bot', content: imageDecoded })
-    } else if (content)
+    } else if (content && content !== '/clear')
       return setLastMessage({ from: 'bot', imageUrl: generateQrCode(content) })
 
     return setLastMessage({ from: 'bot' })
